@@ -1,0 +1,26 @@
+# Exclude virtual environment folder
+venv/
+
+# Python bytecode files
+__pycache__/
+*.pyc
+*.pyo
+
+# Logs and temporary files
+*.log
+*.tmp
+
+# Editor backup files (e.g., Vim, Emacs)
+*~
+*.swp
+
+# Virtual environment files
+.env/
+.env.*
+.env
+
+# Don't track model files
+*.h5
+
+#.idea folder
+.idea/
