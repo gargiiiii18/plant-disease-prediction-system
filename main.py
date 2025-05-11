@@ -6,11 +6,8 @@ import numpy as np
 import tensorflow as tf
 import streamlit as st
 import base64
-import boto3
 import os
-from dotenv import load_dotenv
 
-load_dotenv()
 
 def get_base64(file_path):
     with open(file_path, "rb") as f:
@@ -40,32 +37,11 @@ st.markdown(
 )
 
 
-#s3 details
-BUCKET_NAME = 'plant-disease-prediction-system'
-MODEL_KEY = 'model.h5'
-LOCAL_PATH = 'model.h5'
-
-#function to download model from s3
-def download_model():
-    s3 = boto3.client(
-        's3',
-        aws_access_key_id = os.getenv('AWS_ACCESS_KEY_ID'),
-        aws_secret_access_key=os.getenv('AWS_SECRET_ACCESS_KEY'),
-        region_name='eu-north-1'
-    )
-
-    s3.download_file(BUCKET_NAME, MODEL_KEY, LOCAL_PATH)
-
 #function to load model
-def load_model():
-    if not os.path.exists(LOCAL_PATH):
-        download_model()
-    return tf.keras.models.load_model(LOCAL_PATH)
-
 working_dir = os.path.dirname(os.path.abspath(__file__))
-# model_path = "model.h5"
+model_path = f"{working_dir}/models/model.h5"
 # Load the pre-trained model
-model = load_model()
+model = tf.keras.models.load_model(model_path)
 
 # loading the class names
 class_indices = json.load(open(f"{working_dir}/class_indices.json"))
